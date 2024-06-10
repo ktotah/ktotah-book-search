@@ -6,7 +6,8 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const db = require("./config/connection");
-const routes = require("./routes");
+const routes = require("./routes_backup");
+const mongoose = require('mongoose');
 const { authMiddleware } = require("./utils/auth");
 const { typeDefs, resolvers } = require("./schemas");
 
