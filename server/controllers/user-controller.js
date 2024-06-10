@@ -1,88 +1,86 @@
-// import user model
+// Import user model
 const { User } = require('../models');
-// import sign token function from auth
+// Import sign token function from auth
 const { signToken } = require('../utils/auth');
 
 module.exports = {
-  // get a single user by either their id or their username
+  // Retrieve a single user by either their id or username
   async getSingleUser({ user = null, params }, res) {
     try {
-      console.log("getSingleUser called with user:", user, "params:", params); // Added logging
+      console.log("getSingleUser called with user:", user, "params:", params);
       const foundUser = await User.findOne({
         $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
       });
 
       if (!foundUser) {
-        return res.status(400).json({ message: 'Cannot find a user with this id!' });
+        return res.status(400).json({ message: 'User not found!' });
       }
 
       res.json(foundUser);
     } catch (err) {
-      console.error("Error in getSingleUser:", err); // Added logging
+      console.error("Error retrieving user:", err);
       res.status(500).json({ message: 'Internal server error' });
     }
   },
 
-  // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
+  // Create a user, sign a token, and send it back
   async createUser({ body }, res) {
-    console.log("createUser called with body:", body); // Added logging
+    console.log("createUser called with body:", body);
     try {
       const user = await User.create(body);
 
       if (!user) {
-        return res.status(400).json({ message: 'Something is wrong!' });
+        return res.status(400).json({ message: 'Unable to create user!' });
       }
       const token = signToken(user);
       res.json({ token, user });
     } catch (err) {
-      console.error("Error creating user:", err); // Added logging
+      console.error("Error creating user:", err);
       res.status(500).json({ message: 'Internal server error' });
     }
   },
 
-  // login a user, sign a token, and send it back (to client/src/components/LoginForm.js)
-  // {body} is destructured req.body
+  // Login a user, sign a token, and send it back
   async login({ body }, res) {
-    console.log("login called with body:", body); // Added logging
+    console.log("login called with body:", body);
     try {
       const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
       if (!user) {
-        return res.status(400).json({ message: "Can't find this user" });
+        return res.status(400).json({ message: 'User not found!' });
       }
 
       const correctPw = await user.isCorrectPassword(body.password);
 
       if (!correctPw) {
-        return res.status(400).json({ message: 'Wrong password!' });
+        return res.status(400).json({ message: 'Incorrect password!' });
       }
       const token = signToken(user);
       res.json({ token, user });
     } catch (err) {
-      console.error("Error logging in user:", err); // Added logging
+      console.error("Error logging in user:", err);
       res.status(500).json({ message: 'Internal server error' });
     }
   },
 
-  // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
-  // user comes from `req.user` created in the auth middleware function
+  // Save a book to a user's `savedBooks` field by adding it to the set
   async saveBook({ user, body }, res) {
-    console.log("saveBook called with user:", user, "body:", body); // Added logging
+    console.log("saveBook called with user:", user, "body:", body);
     try {
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
-        { $addToSet: { savedBooks: body } }, // Ensure body includes the link field
+        { $addToSet: { savedBooks: body } },
         { new: true, runValidators: true }
       );
-      return res.json(updatedUser);
+      res.json(updatedUser);
     } catch (err) {
-      console.error("Error saving book:", err); // Added logging
+      console.error("Error saving book:", err);
       return res.status(400).json(err);
     }
   },
 
-  // remove a book from `savedBooks`
+  // Remove a book from `savedBooks`
   async deleteBook({ user, params }, res) {
-    console.log("deleteBook called with user:", user, "params:", params); // Added logging
+    console.log("deleteBook called with user:", user, "params:", params);
     try {
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
@@ -90,11 +88,11 @@ module.exports = {
         { new: true }
       );
       if (!updatedUser) {
-        return res.status(404).json({ message: "Couldn't find user with this id!" });
+        return res.status(404).json({ message: 'User not found!' });
       }
-      return res.json(updatedUser);
+      res.json(updatedUser);
     } catch (err) {
-      console.error("Error deleting book:", err); // Added logging
+      console.error("Error deleting book:", err);
       res.status(500).json({ message: 'Internal server error' });
     }
   },
