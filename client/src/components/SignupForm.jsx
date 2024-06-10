@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-
 import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
 
@@ -28,6 +27,7 @@ const SignupForm = () => {
     }
 
     try {
+      console.log("Submitting form data:", userFormData); // Added logging
       const response = await createUser(userFormData);
 
       if (!response.ok) {
@@ -38,7 +38,7 @@ const SignupForm = () => {
       console.log(user);
       Auth.login(token);
     } catch (err) {
-      console.error(err);
+      console.error("Error in handleFormSubmit:", err); // Added logging
       setShowAlert(true);
     }
 
