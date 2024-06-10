@@ -8,16 +8,20 @@
         "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
         "install": "cd server && npm i && cd ../client && npm i",
         "build": "cd client && npm run build",
-        "render-build": "npm install && npm run build"
+        "render-build": "npm install && npm run build",
+        "lint": "eslint client --report-unused-disable-directives --max-warnings 0"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "concurrently": "^5.1.0"
-    },
-    "dependencies": {
-        "apollo-server-express": "^3.13.0",
-        "graphql": "^16.8.1"
+        "@eslint/compat": "^1.0.3",
+        "@eslint/js": "^9.4.0",
+        "concurrently": "^5.1.0",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.34.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.3.4",
+        "globals": "^15.4.0"
     }
 }
