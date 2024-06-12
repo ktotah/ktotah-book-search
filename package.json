@@ -4,35 +4,36 @@
     "description": "",
     "main": "server/server.js",
     "scripts": {
-        "start": "node server/server.js",
-        "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
-        "install": "cd server && npm i && cd ../client && npm i",
-        "build": "cd client && npm run build",
-        "render-build": "npm install -g vite && cd server && npm install && cd ../client && npm install --force && npx vite build",
-        "lint": "eslint client --report-unused-disable-directives --max-warnings 0"
+      "start": "node server/server.js",
+      "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+      "install": "cd server && npm i && cd ../client && npm i",
+      "build": "cd client && npm run build",
+      "render-build": "npm install -g vite && cd server && npm install && cd ../client && npm install --force && npm run build",
+      "lint": "eslint client --report-unused-disable-directives --max-warnings 0"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@eslint/compat": "^1.0.3",
-        "@eslint/js": "^9.4.0",
-        "concurrently": "^8.2.2",
-        "cypress": "^13.11.0",
-        "eslint": "^8.57.0",
-        "eslint-plugin-react": "^7.34.2",
-        "eslint-plugin-react-hooks": "^4.6.2",
-        "eslint-plugin-react-refresh": "^0.3.5",
-        "globals": "^15.4.0",
-        "jest": "^29.7.0",
-        "vite": "^4.4.5"
+      "@eslint/compat": "^1.0.3",
+      "@eslint/js": "^9.4.0",
+      "concurrently": "^8.2.2",
+      "cypress": "^13.11.0",
+      "eslint": "^8.57.0",
+      "eslint-plugin-react": "^7.34.2",
+      "eslint-plugin-react-hooks": "^4.6.2",
+      "eslint-plugin-react-refresh": "^0.3.5",
+      "globals": "^15.4.0",
+      "jest": "^29.7.0",
+      "vite": "^4.4.5"
     },
     "dependencies": {
-        "@apollo/server": "^4.10.4",
-        "apollo-server-express": "^3.13.0",
-        "bcryptjs": "^2.4.3",
-        "cors": "^2.8.5",
-        "dotenv": "^16.4.5",
-        "graphql": "^16.8.1"
+      "@apollo/server": "^4.10.4",
+      "apollo-server-express": "^3.13.0",
+      "bcryptjs": "^2.4.3",
+      "cors": "^2.8.5",
+      "dotenv": "^16.4.5",
+      "graphql": "^16.8.1"
     }
-}
+  }
+  
