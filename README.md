@@ -50,12 +50,14 @@ To get started with the Book Search App:
 1. Ensure Node.js and MongoDB are installed on your machine.
 2. Clone the repository to your local machine: `git clone https://github.com/ktotah/ktotah-book-search.git`.
 3. Navigate to the project directory in your terminal.
-4. Install the necessary dependencies by running: `npm install`.
-5. Create a `.env` file (based on the example file `.env.EXAMPLE` provided) in the root directory and add your environment variables: 
-```bash
-MONGODB_URI=<your-mongodb-connection-string>
-JWT_SECRET=<your-jwt-secret>
-```
+4. Install the necessary dependencies by running: `npm install` in the root directory.
+5. Create a `.env` file in the root directory and add your environment variables:
+    ```bash
+    MONGODB_URI=<your-mongodb-connection-string>
+    JWT_SECRET=<your-jwt-secret>
+    NODE_ENV=development
+    PORT=3002
+    ```
 6. Start your MongoDB server.
 7. Start the server by navigating into the `server` folder and running: `npm start` - the server should begin running on PORT 3002.
 8. Start the front-end of the application by navigating into the `client` folder and running: `npm start` - the application should start running on PORT 3001.
@@ -64,7 +66,13 @@ JWT_SECRET=<your-jwt-secret>
 Launch the application by navigating to the front-end port `http://localhost:3001` in your web browser. Sign up for an account or log in to search for books, save your favorites, and view them later.
 
 ## Deployment
-This application is deployed on Render. You can access it at the link [here](REPLACE_W_REAL_LINK).
+**This application is deployed on Render. You can access it at this link: [here](https://ktotah-book-search-frontend.onrender.com/).**
+
+Please note, the frontend and backend are both deployed on Render, but I deployed them separately to make debugging easier. The two deployed links are:
+
+- **Frontend**: [Book Search App Frontend](https://ktotah-book-search-frontend.onrender.com/) - this is the same as the link above and is the correct link to use the actual Book Search Application
+- **Backend** *(**warning:** link doesn't display much!):* [Book Search App Backend](https://ktotah-book-search-backend.onrender.com/) - the backend link is for GraphQL API access and won't display anything directly, but I wanted to include it in this README to demonstrate that both parts of the application were deployed by me.
+
 
 <br>
 Screenshot of the application:
