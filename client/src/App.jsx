@@ -10,10 +10,10 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 // Determine the correct URI for the GraphQL endpoint
-console.log('GraphQL Endpoint:', process.env.REACT_APP_GRAPHQL_ENDPOINT);
-
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || "http://localhost:3002/graphql",
+  uri: window.location.hostname === "localhost"
+    ? "http://localhost:3002/graphql"
+    : "https://ktotah-book-search-backend.onrender.com/graphql",
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
@@ -44,4 +44,3 @@ function App() {
 }
 
 export default App;
-export { client };

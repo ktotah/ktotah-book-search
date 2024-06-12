@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const app = express();
 
 const startApolloServer = async () => {
@@ -23,7 +23,7 @@ const startApolloServer = async () => {
   await server.start();
 
   app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://ktotah-book-search.onrender.com' : '*'
+    origin: process.env.NODE_ENV === 'production' ? 'https://ktotah-book-search-frontend.onrender.com' : '*'
   }));
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
