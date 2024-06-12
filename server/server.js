@@ -22,7 +22,7 @@ const startApolloServer = async () => {
   await server.start();
 
   app.use(cors({
-    origin: 'https://ktotah-book-search.onrender.com' // Your deployed frontend URL
+    origin: process.env.NODE_ENV === 'production' ? 'https://ktotah-book-search.onrender.com' : '*'
   }));
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
