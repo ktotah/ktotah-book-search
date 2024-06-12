@@ -12,8 +12,8 @@ import { setContext } from "@apollo/client/link/context";
 // Determine the correct URI for the GraphQL endpoint
 const httpLink = createHttpLink({
   uri: window.location.hostname === "localhost"
-    ? "http://localhost:3002/graphql"
-    : "https://ktotah-book-search-backend.onrender.com/graphql",
+  ? "http://localhost:3002/graphql"
+  : "https://ktotah-book-search-backend.onrender.com/graphql",
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
@@ -44,3 +44,4 @@ function App() {
 }
 
 export default App;
+export { client };
