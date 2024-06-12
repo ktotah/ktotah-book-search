@@ -17,6 +17,7 @@ const startApolloServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection: true, // Enable introspection
   });
 
   await server.start();
