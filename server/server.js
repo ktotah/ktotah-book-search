@@ -36,14 +36,6 @@ const startApolloServer = async () => {
     })
   );
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    });
-  }
-
   console.log('Connecting to MongoDB URI:', process.env.MONGODB_URI);
   mongoose
     .connect(process.env.MONGODB_URI)
