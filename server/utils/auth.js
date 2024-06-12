@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
 
 // set token secret and expiration date
-const secret = 'mysecretsshhhhh';
+const secret = process.env.JWT_SECRET || 'default_secret'; // Use environment variable
 const expiration = '2h';
 
 module.exports = {
@@ -48,3 +48,4 @@ module.exports = {
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };
+
