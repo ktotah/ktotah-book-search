@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
-import Auth from '../utils.auth';
+import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
@@ -14,6 +14,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (error) {
       setShowAlert(true);
+      console.error("GraphQL Error: ", error);
     } else {
       setShowAlert(false);
     }
@@ -27,7 +28,6 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -35,10 +35,12 @@ const LoginForm = () => {
     }
 
     try {
-      console.log("Submitting login data:", userFormData); // Added logging
+      console.log("Submitting login data:", userFormData);
       const { data } = await loginUser({
         variables: { ...userFormData },
       });
+
+      console.log("Received data: ", data);
 
       if (!data) {
         throw new Error('something went wrong!');
@@ -48,7 +50,7 @@ const LoginForm = () => {
       console.log(user);
       Auth.login(token);
     } catch (err) {
-      console.error("Error in handleFormSubmit:", err); // Added logging
+      console.error("Error in handleFormSubmit:", err);
       setShowAlert(true);
     }
 
@@ -74,6 +76,7 @@ const LoginForm = () => {
             onChange={handleInputChange}
             value={userFormData.email}
             required
+            id='login-email' // Add ID for label
           />
           <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
         </Form.Group>
@@ -87,13 +90,16 @@ const LoginForm = () => {
             onChange={handleInputChange}
             value={userFormData.password}
             required
+            id='login-password' // Add ID for label
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
           disabled={!(userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+          variant='success'
+          data-testid='login-submit' // Add data-testid for Cypress tests
+        >
           Submit
         </Button>
       </Form>

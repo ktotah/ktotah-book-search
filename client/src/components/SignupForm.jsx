@@ -11,12 +11,13 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  
+
   const [addUser, { error }] = useMutation(ADD_USER);
-  
+
   useEffect(() => {
     if (error) {
       setShowAlert(true);
+      console.error("GraphQL Error: ", error);
     } else {
       setShowAlert(false);
     }
@@ -38,10 +39,12 @@ const SignupForm = () => {
     }
 
     try {
-      console.log("Submitting form data:", userFormData); // Added logging
+      console.log("Submitting form data:", userFormData);
       const { data } = await addUser({
         variables: { ...userFormData },
       });
+
+      console.log("Received data: ", data);
 
       if (!data) {
         throw new Error('something went wrong!');
@@ -51,7 +54,7 @@ const SignupForm = () => {
       console.log(user);
       Auth.login(token);
     } catch (err) {
-      console.error("Error in handleFormSubmit:", err); // Added logging
+      console.error("Error in handleFormSubmit:", err);
       setShowAlert(true);
     }
 
@@ -64,9 +67,7 @@ const SignupForm = () => {
 
   return (
     <>
-      {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {/* show alert if server response is bad */}
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your signup!
         </Alert>
@@ -80,6 +81,7 @@ const SignupForm = () => {
             onChange={handleInputChange}
             value={userFormData.username}
             required
+            id='signup-username' // Add ID for label
           />
           <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
         </Form.Group>
@@ -93,6 +95,7 @@ const SignupForm = () => {
             onChange={handleInputChange}
             value={userFormData.email}
             required
+            id='signup-email' // Add ID for label
           />
           <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
         </Form.Group>
@@ -106,13 +109,16 @@ const SignupForm = () => {
             onChange={handleInputChange}
             value={userFormData.password}
             required
+            id='signup-password' // Add ID for label
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+          variant='success'
+          data-testid='signup-submit' // Add data-testid for Cypress tests
+        >
           Submit
         </Button>
       </Form>

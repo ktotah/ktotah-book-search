@@ -38,7 +38,7 @@ const SearchBooks = () => {
 
       const { items } = await response.json();
 
-      const bookData = items.map((book) => ({
+      const bookInput = items.map((book) => ({
         bookId: book.id,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
         title: book.volumeInfo.title,
@@ -47,7 +47,7 @@ const SearchBooks = () => {
         link: book.volumeInfo.infoLink || '', // including Google Books link
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedBooks(bookInput);
       setSearchInput('');
     } catch (err) {
       console.error(err);
